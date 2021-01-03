@@ -1,0 +1,5 @@
+### vscode ###
+.vscode/
+
+### .json files ###
+*.json
