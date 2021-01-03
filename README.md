@@ -5,10 +5,10 @@ This repo is strictly for the educational purposes of Python training with a cur
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Data Retrieval](#data retrieval)
-3. [Data Manipulation](#data manipulation)
-4. [Data Visualization](#data visualization)
-5. [Data Analysis](#data analysis)
+2. [Data Retrieval](#data-retrieval)
+3. [Data Manipulation](#data-manipulation)
+4. [Data Visualization](#data-visualization)
+5. [Data Analysis](#data-analysis)
 6. [Environment](#environment)
 
 ## Introduction
