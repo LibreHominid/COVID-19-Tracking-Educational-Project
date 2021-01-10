@@ -14,6 +14,10 @@ Inputs:
 Outputs:
 
 '''
+# import packages
+import matplotlib.pyplot as plt
+import numpy as np
+
 # Python program to read json file 
 import json 
   
@@ -22,10 +26,20 @@ f = open('owid-covid-data.json','r')
   
 # returns JSON object as a dictionary 
 data = json.load(f) 
-  
-# Iterating through the json list 
-for i in data['USA']: 
-    print(i) 
-  
+
 # Closing file 
 f.close()
+
+
+# Data Structure from JSON file:
+### Country/Country Metadata/Days Since Patient Zero/Data
+
+# pulling data for Country: USA
+USA = data['USA']
+
+# initialize array for Daily data: total_cases
+total_cases = np.zeros((len(USA['data']),1))
+
+# For loop going through Daily Data
+for ii,day in enumerate(USA['data']):
+    total_cases[ii] = day['total_cases']
