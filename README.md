@@ -33,9 +33,13 @@ https://covid.ourworldindata.org/data/owid-covid-data.json
 
 Remove unnecessary metadata. Data we care about is:
 
+- Total cases
+
 - New cases
 
 - New deaths
+
+- Total tests
 
 - New tests
 
