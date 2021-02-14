@@ -37,6 +37,8 @@ Remove unnecessary metadata. Data we care about is:
 
 - New cases
 
+- Total deaths
+
 - New deaths
 
 - Total tests
