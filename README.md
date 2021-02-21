@@ -57,13 +57,17 @@ Identify outliers (if any).
 
 Timeseries:
 
-- new cases vs. day
-
 - cummulative cases vs. day
 
-- new tests vs. day
+- new cases vs. day
+
+- cummulative deaths vs. day
+
+- new deaths vs. day
 
 - cummulative tests vs. day
+
+- new tests vs. day
 
 - hospital patients vs. day
 
@@ -74,6 +78,11 @@ Correlation:
 
 
 ## Data Analysis
+
+Smoothing: 
+- 7 Day moving average
+
+- other methodologies TBD
 
 Will include:
 

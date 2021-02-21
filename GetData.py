@@ -86,3 +86,57 @@ for ii,day in enumerate(USA['data']):
     day_num[ii] = ii
     if 'date' in day:
         date[ii] = day['date']
+
+
+### Data Visualizations
+
+## Time Series
+# cummulative cases vs. day: total_cases and day_num
+plt.figure()
+plt.plot(day_num, total_cases)
+plt.xlabel('Days Since Patient Zero')
+plt.ylabel('Cummulative Cases')
+
+# new cases vs. day: new_cases and day_num
+plt.figure()
+plt.plot(day_num, new_cases)
+plt.xlabel('Days Since Patient Zero')
+plt.ylabel('Daily New Cases')
+
+#total deaths vs. day: total_deaths and day_num
+plt.figure()
+plt.plot(day_num, total_deaths)
+plt.xlabel('Days Since Patient Zero')
+plt.ylabel('Cumulative Deaths')
+
+#new deaths vs. day: new_deaths and day_num
+plt.figure()
+plt.plot(day_num, new_deaths)
+plt.xlabel('Days Since Patient Zero')
+plt.ylabel('Daily New Deaths')
+
+# cummulative tests vs. day: total_tests and day_num
+plt.figure()
+plt.plot(day_num, total_tests)
+plt.xlabel('Days Since Patient Zero')
+plt.ylabel('Cumulative tests')
+
+# new tests vs. day: new_tests and day_num
+plt.figure()
+plt.plot(day_num, new_tests)
+plt.xlabel('Days Since Patient Zero')
+plt.ylabel('Daily New Tests')
+
+# hospital patients vs. day: hosp_patients and day_num
+plt.figure()
+plt.plot(day_num, hosp_patients)
+plt.xlabel('Days Since Patient Zero')
+plt.ylabel('Hospitalized Patients')
+
+## Correlation:
+
+# new tests vs. new cases
+plt.figure()
+plt.scatter(new_tests, new_cases)
+plt.xlabel('Daily New Tests')
+plt.ylabel('Daily New Cases')
