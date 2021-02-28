@@ -59,15 +59,15 @@ Timeseries:
 
 - cummulative cases vs. day
 
-- new cases vs. day
+- new cases vs. day w/ 7 Day Moving Avg
 
 - cummulative deaths vs. day
 
-- new deaths vs. day
+- new deaths vs. day w/ 7 Day Moving Avg
 
 - cummulative tests vs. day
 
-- new tests vs. day
+- new tests vs. day w/ 7 Day Moving Avg
 
 - hospital patients vs. day
 
@@ -81,6 +81,8 @@ Correlation:
 
 Smoothing: 
 - 7 Day moving average
+
+- [Gaussian Kernal Smoothing](https://en.wikipedia.org/wiki/Kernel_smoother)
 
 - other methodologies TBD
 
