@@ -3,3 +3,6 @@
 
 ### .json files ###
 *.json
+
+### virtual environment ###
+covid19-env/

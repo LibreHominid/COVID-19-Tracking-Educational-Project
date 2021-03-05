@@ -1,84 +1,44 @@
 '''
 Summary:
-Collect data recorded regarding the SARS-COV-2 (COVID-19) virus. Open file, select fields for use.
+Basic script to collect, analyze and portray COVID-19 data in the USA.
 
-Date Created: 
-(YYYY-MM-DD) 2021-01-03
+Date Created: 2021-01-03
+Date Updated: 2021-03-04
 
 Authors: 
-Daniel Noirot, Brandon Noirot
-
-Inputs:
-
-
-Outputs:
-
+~ Daniel Noirot
+~ Brandon Noirot
 '''
-# import packages
+# Packages
 import matplotlib.pyplot as plt
-import numpy as np
-
-# Python program to read json file 
+import numpy as np 
 import json 
   
-# Opening JSON file 
+# Read JSON file
 f = open('owid-covid-data.json','r') 
-  
-# returns JSON object as a dictionary 
 data = json.load(f) 
-
-# Closing file 
 f.close()
 
-
-# Data Structure from JSON file:
-### Country/Country Metadata/Days Since Patient Zero/Data
-
-# pulling data for Country: USA
+############################################################################
+# NOTE - Data Structure from JSON file:
+# Country / Country Metadata / Days Since Patient Zero / Data
 USA = data['USA']
 
-# Initializations
-
-# initialize array for Daily data: total_cases
+# Initialize arrays
 total_cases = np.zeros((len(USA['data']),1))
-
-#initialize array for Daily data: new_cases
 new_cases = total_cases.copy()
-
-#initialize array for new_cases 7 day average
 new_cases_avg = total_cases.copy()
-
-#initialize array for Daily data: total_deaths
 total_deaths = total_cases.copy()
-
-#initialize array for Daily data: new_deaths
 new_deaths = total_cases.copy()
-
-#initialize array for new_deaths 7 day average
 new_deaths_avg = total_cases.copy()
-
-#initialize array for Daily data: total_tests
 total_tests = total_cases.copy()
-
-#initialize array for Daily data: new_tests
 new_tests = total_cases.copy()
-
-#initialize array for new_tests 7 day average
 new_tests_avg = total_cases.copy()
-
-#initialize array for Daily data: hosp_patients
 hosp_patients = total_cases.copy()
-
-#initialize array for Daily data: days_since_patient_zero
 day_num = total_cases.copy()
-
-#initialize array for Daily data: date
 date = np.empty(total_cases.shape,dtype=np.dtype('U25'))
 
-
-### For loops
-
-# For loop going through Daily Data: all fields
+# Categorize and append data
 for ii,day in enumerate(USA['data']):
     if 'total_cases' in day:
         total_cases[ii] = day['total_cases']
@@ -98,70 +58,55 @@ for ii,day in enumerate(USA['data']):
     if 'date' in day:
         date[ii] = day['date']
 
-# For loop 7 Day moving Averages
+# 7-Day moving averages
 for ii in range(len(new_cases)):
     if ii > 5:
-        new_cases_avg[ii] = sum(new_cases[ii-6:ii+1])/len(new_cases[ii-6:ii+1])
-        new_deaths_avg[ii] = sum(new_deaths[ii-6:ii+1])/len(new_deaths[ii-6:ii+1])
-        new_tests_avg[ii] = sum(new_tests[ii-6:ii+1])/len(new_tests[ii-6:ii+1])
+        new_cases_avg[ii] = sum( new_cases[ii-6:ii+1] ) / len( new_cases[ii-6:ii+1] )
+        new_deaths_avg[ii] = sum( new_deaths[ii-6:ii+1] ) / len( new_deaths[ii-6:ii+1] )
+        new_tests_avg[ii] = sum( new_tests[ii-6:ii+1] ) / len( new_tests[ii-6:ii+1] )
 
-# For loop Gaussian Kernal smoothing
-
-
-### Data Visualizations
-
-## Time Series
-# cummulative cases vs. day: total_cases and day_num
+############################################################################
 plt.figure()
 plt.plot(day_num, total_cases)
 plt.xlabel('Days Since Patient Zero')
 plt.ylabel('Cummulative Cases')
 
-# new cases vs. day: new_cases and day_num
 plt.figure()
 plt.plot(day_num, new_cases, label = 'Daily Count')
-plt.plot(day_num, new_cases_avg, label = '7 Day Moving Avg')
+plt.plot(day_num, new_cases_avg, label = '7-Day Moving Avg')
 plt.xlabel('Days Since Patient Zero')
 plt.ylabel('Daily New Cases')
 plt.legend()
 
-#total deaths vs. day: total_deaths and day_num
 plt.figure()
 plt.plot(day_num, total_deaths)
 plt.xlabel('Days Since Patient Zero')
 plt.ylabel('Cumulative Deaths')
 
-#new deaths vs. day: new_deaths and day_num
 plt.figure()
 plt.plot(day_num, new_deaths, label = 'Daily Count')
-plt.plot(day_num, new_deaths_avg, label = '7 Day Moving Avg')
+plt.plot(day_num, new_deaths_avg, label = '7-Day Moving Avg')
 plt.xlabel('Days Since Patient Zero')
 plt.ylabel('Daily New Deaths')
 plt.legend()
 
-# cummulative tests vs. day: total_tests and day_num
 plt.figure()
 plt.plot(day_num, total_tests)
 plt.xlabel('Days Since Patient Zero')
 plt.ylabel('Cumulative tests')
 
-# new tests vs. day: new_tests and day_num
 plt.figure()
 plt.plot(day_num, new_tests, label = 'Daily Count')
-plt.plot(day_num, new_tests_avg, label = '7 Day Moving Avg')
+plt.plot(day_num, new_tests_avg, label = '7-Day Moving Avg')
 plt.xlabel('Days Since Patient Zero')
 plt.ylabel('Daily New Tests')
 plt.legend()
 
-# hospital patients vs. day: hosp_patients and day_num
 plt.figure()
 plt.plot(day_num, hosp_patients)
 plt.xlabel('Days Since Patient Zero')
 plt.ylabel('Hospitalized Patients')
 
-## Correlation:
-
-# new tests vs. new cases
 plt.figure()
 plt.scatter(new_tests, new_cases)
 plt.xlabel('Daily New Tests')
