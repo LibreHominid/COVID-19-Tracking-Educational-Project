@@ -7,10 +7,13 @@ Date Modified: 3/7/2021
 Authors: Daniel Noirot, Brandon Noirot
 '''
 
-# Function: 7 Day Moving Average
+# Functions: 7 Day Moving Average
 def WeekAvg(week):
     avg = sum(week)/len(week)
     return avg
+
+def CasePositivity(cases, tests):
+    return cases/tests*100
 
 
 if __name__ is '__main__':
@@ -18,11 +21,13 @@ if __name__ is '__main__':
     import matplotlib.pyplot as plt
     import numpy as np 
     import json 
-    
+    import urllib3
+
     # Read JSON file
-    f = open('owid-covid-data.json','r') 
-    data = json.load(f) 
-    f.close()
+
+    with urllib3.PoolManager() as url:
+        f = url.request('GET', 'https://covid.ourworldindata.org/data/owid-covid-data.json')
+        data = json.loads(f.data.decode('utf-8'))
 
     ############################################################################
     # NOTE - Data Structure from JSON file:
@@ -42,6 +47,12 @@ if __name__ is '__main__':
     hosp_patients = total_cases.copy()
     day_num = total_cases.copy()
     date = np.empty(total_cases.shape,dtype=np.dtype('U25'))
+    new_vacs = total_cases.copy()
+    new_vacs_avg = total_cases.copy()
+    total_vacs = total_cases.copy()
+    people_vacs = total_cases.copy()
+    people_full_vacs = total_cases.copy()
+    positivity = total_cases.copy()
 
     # Categorize and append data
     for ii,day in enumerate(USA['data']):
@@ -62,13 +73,30 @@ if __name__ is '__main__':
         day_num[ii] = ii
         if 'date' in day:
             date[ii] = day['date']
+        if 'new_vaccinations' in day:
+            new_vacs[ii] = day['new_vaccinations']
+        if 'total_vaccinations' in day:
+            total_vacs[ii] = day['total_vaccinations']
+        if 'people_vaccinated' in day:
+            people_vacs[ii] = day['people_vaccinated']
+        if 'people_fully_vaccinated' in day:
+            people_full_vacs[ii] = day['people_fully_vaccinated']
 
+
+    for ii in range(len(new_cases)):
+        if new_tests[ii] != 0:
+            positivity[ii] = CasePositivity(new_cases[ii], new_tests[ii])
+
+    # Data Masking
+
+   
     # 7-Day moving averages
     for ii in range(len(new_cases)):
         if ii > 5:
             new_cases_avg[ii] = WeekAvg(new_cases[ii-6:ii+1])
             new_deaths_avg[ii] = WeekAvg(new_deaths[ii-6:ii+1])
             new_tests_avg[ii] = WeekAvg(new_tests[ii-6:ii+1])
+            new_vacs_avg[ii] = WeekAvg(new_vacs[ii-6:ii+1])
 
     ############################################################################
     plt.figure()
@@ -116,3 +144,27 @@ if __name__ is '__main__':
     plt.scatter(new_tests, new_cases)
     plt.xlabel('Daily New Tests')
     plt.ylabel('Daily New Cases')
+
+    plt.figure()
+    plt.plot(day_num, new_vacs, label = 'Daily Count')
+    plt.plot(day_num, new_vacs_avg, label = '7-Day Moving Avg')
+    plt.xlabel('Days Since Patient Zero')
+    plt.ylabel('Daily New Vaccinations')
+    plt.legend()
+
+    plt.figure()
+    plt.plot(day_num, total_vacs)
+    plt.xlabel('Days Since Patient Zero')
+    plt.ylabel('Cumulative Vaccinations')
+
+    plt.figure()
+    plt.plot(day_num, people_vacs, label = 'Partial & Fully')
+    plt.plot(day_num,people_full_vacs, label = 'Fully')
+    plt.xlabel('Days Since Patient Zero')
+    plt.ylabel('People Vaccinated')
+    plt.legend()
+
+    plt.figure()
+    plt.plot(day_num, positivity)
+    plt.xlabel('Days Since Patient Zero')
+    plt.ylabel('Testing Positivity [%]')

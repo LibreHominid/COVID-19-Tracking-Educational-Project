@@ -51,6 +51,16 @@ Remove unnecessary metadata. Data we care about is:
 
 - Date
 
+- New Vaccinations
+
+- Total Vaccinations
+
+- People Vaccinated
+
+- People Fully Vaccinated
+
+- Testing Positivity
+
 Identify outliers (if any).
 
 ## Data Visualization
@@ -70,6 +80,16 @@ Timeseries:
 - new tests vs. day w/ 7 Day Moving Avg
 
 - hospital patients vs. day
+
+- New Vaccinations vs. day w/ 7 Day Moving Avg.
+
+- Total Vaccinations vs. day
+
+- People Vaccinated vs. day
+
+- People Fully Vaccinated vs. day
+
+- Testing Positivity vs. day
 
 Correlation:
 
