@@ -37,18 +37,19 @@ class least_squares:
         self.b = np.zeros((len(y),1))
         for ii in range(len(y)):
             self.b[ii] = y[ii]
-    def solve_for_x(self):
+    def solve_for_x_matrix(self):
         ATA = np.asmatrix(self.A.transpose()) * np.asmatrix(self.A)
         ATb = np.asmatrix(self.A.transpose()) * np.asmatrix(self.b)
         self.X = np.linalg.inv(ATA) * ATb
     def FUN(self,x):
         self.new_y = np.zeros(len(x))
+        self.new_x = np.asarray(x, dtype = 'float')
         for ii in range(len(x)):
             self.new_y[ii] = self.X.item(0) + x[ii] * self.X.item(1)
         
 
 
-if __name__ is '__main__':
+if __name__ == '__main__':
     # Packages
     import matplotlib.pyplot as plt
     import numpy as np 
@@ -67,6 +68,8 @@ if __name__ is '__main__':
     USA = data['USA']
 
     # Initialize arrays
+    masked_val = -999.
+#     total_cases = np.ma.array(np.ones((len(USA['data']),1))*masked_val, mask = True, fill_value = masked_val)
     total_cases = np.zeros((len(USA['data']),1))
     new_cases = total_cases.copy()
     new_cases_avg = total_cases.copy()
@@ -118,9 +121,7 @@ if __name__ is '__main__':
     for ii in range(len(new_cases)):
         if new_tests[ii] != 0:
             positivity[ii] = CasePositivity(new_cases[ii], new_tests[ii])
-
-    # Data Masking
-
+            
    
     # 7-Day moving averages
     for ii in range(len(new_cases)):
@@ -129,6 +130,13 @@ if __name__ is '__main__':
             new_deaths_avg[ii] = WeekAvg(new_deaths[ii-6:ii+1])
             new_tests_avg[ii] = WeekAvg(new_tests[ii-6:ii+1])
             new_vacs_avg[ii] = WeekAvg(new_vacs[ii-6:ii+1])
+            
+    # Least Squares Calculations
+    New_Cases_New_Tests = least_squares()
+    New_Cases_New_Tests.A_matrix(new_tests)
+    New_Cases_New_Tests.b_matrix(new_cases)
+    New_Cases_New_Tests.solve_for_x_matrix()
+    New_Cases_New_Tests.FUN([0,max(new_tests)])
 
     ############################################################################
     plt.figure()
@@ -174,6 +182,7 @@ if __name__ is '__main__':
 
     plt.figure()
     plt.scatter(new_tests, new_cases)
+    plt.plot(New_Cases_New_Tests.new_x, New_Cases_New_Tests.new_y)
     plt.xlabel('Daily New Tests')
     plt.ylabel('Daily New Cases')
 
