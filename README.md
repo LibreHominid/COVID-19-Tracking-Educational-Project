@@ -33,33 +33,33 @@ https://covid.ourworldindata.org/data/owid-covid-data.json
 
 Remove unnecessary metadata. Data we care about is:
 
-- Total cases
+- [x] Total cases
 
-- New cases
+- [x] New cases
 
-- Total deaths
+- [x] Total deaths
 
-- New deaths
+- [x] New deaths
 
-- Total tests
+- [x] Total tests
 
-- New tests
+- [x] New tests
 
-- Hospital patients
+- [x] Hospital patients
 
-- Days since patient zero
+- [x] Days since patient zero
 
-- Date
+- [x] Date
 
-- New Vaccinations
+- [x] New Vaccinations
 
-- Total Vaccinations
+- [x] Total Vaccinations
 
-- People Vaccinated
+- [x] People Vaccinated
 
-- People Fully Vaccinated
+- [x] People Fully Vaccinated
 
-- Testing Positivity
+- [x] Testing Positivity
 
 Identify outliers (if any).
 
@@ -67,50 +67,51 @@ Identify outliers (if any).
 
 Timeseries:
 
-- cummulative cases vs. day
+- [x] cummulative cases vs. day
 
-- new cases vs. day w/ 7 Day Moving Avg
+- [x] new cases vs. day w/ 7 Day Moving Avg
 
-- cummulative deaths vs. day
+- [x] cummulative deaths vs. day
 
-- new deaths vs. day w/ 7 Day Moving Avg
+- [x] new deaths vs. day w/ 7 Day Moving Avg
 
-- cummulative tests vs. day
+- [x] cummulative tests vs. day
 
-- new tests vs. day w/ 7 Day Moving Avg
+- [x] new tests vs. day w/ 7 Day Moving Avg
 
-- hospital patients vs. day
+- [x] hospital patients vs. day
 
-- New Vaccinations vs. day w/ 7 Day Moving Avg.
+- [x] New Vaccinations vs. day w/ 7 Day Moving Avg.
 
-- Total Vaccinations vs. day
+- [x] Total Vaccinations vs. day
 
-- People Vaccinated vs. day
+- [x] People Vaccinated vs. day
 
-- People Fully Vaccinated vs. day
+- [x] People Fully Vaccinated vs. day
 
-- Testing Positivity vs. day
+- [x] Testing Positivity vs. day
 
 Correlation:
 
-- new tests vs. new cases
+- [x] new tests vs. new cases
 
 
 
 ## Data Analysis
 
 Smoothing: 
-- 7 Day moving average
+- [x] 7 Day moving average
+
+- [x] Linear Least Squares Class
 
 - [Gaussian Kernal Smoothing](https://en.wikipedia.org/wiki/Kernel_smoother)
 
-- other methodologies TBD
 
 Will include:
 
 - trends
 
-- rates of change
+- rates of change (?)
 
 Advanced:
 
