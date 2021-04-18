@@ -6,3 +6,6 @@
 
 ### pycache ###
 __pycache__/
+
+### ipy notebook checkpoints ###
+.ipynb_checkpoints/

@@ -16,6 +16,38 @@ def CasePositivity(cases, tests):
     return cases/tests*100
 
 
+# Classes: 
+class least_squares:
+    ''' Linear Interpolation using Least Squares Methodology.
+
+    '''
+    def __init__(self):
+        self.data = 0
+    def A_matrix(self,x):
+        ''' Input x data into second column of A-matrix.
+        Inputs: x data
+        '''
+        self.A = np.ones((len(x),2))
+        for ii in range(len(x)):
+            self.A[ii,1] = x[ii]
+    def b_matrix(self,y):
+        ''' Assign y data for b-matrix.
+        Inputs: y data
+        '''
+        self.b = np.zeros((len(y),1))
+        for ii in range(len(y)):
+            self.b[ii] = y[ii]
+    def solve_for_x(self):
+        ATA = np.asmatrix(self.A.transpose()) * np.asmatrix(self.A)
+        ATb = np.asmatrix(self.A.transpose()) * np.asmatrix(self.b)
+        self.X = np.linalg.inv(ATA) * ATb
+    def FUN(self,x):
+        self.new_y = np.zeros(len(x))
+        for ii in range(len(x)):
+            self.new_y[ii] = self.X.item(0) + x[ii] * self.X.item(1)
+        
+
+
 if __name__ is '__main__':
     # Packages
     import matplotlib.pyplot as plt
